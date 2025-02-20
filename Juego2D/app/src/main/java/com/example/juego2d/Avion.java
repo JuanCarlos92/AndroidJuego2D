@@ -15,7 +15,7 @@ public class Avion {
     Bitmap avion1, avion2, disparo1, disparo2, disparo3, disparo4, disparo5, muerte;
     private GameView gameView;
 
-    // Constructor de la clase
+    // Constructor
     Avion(GameView gameView, int screenY, Resources res) {
         this.gameView = gameView;
 

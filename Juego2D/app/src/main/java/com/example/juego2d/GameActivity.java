@@ -2,19 +2,26 @@ package com.example.juego2d;
 
 import android.graphics.Point;
 import android.os.Bundle;
-import android.view.WindowManager;
+import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 public class GameActivity extends AppCompatActivity {
 
     private GameView gameView;
+    boolean isMute;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
+        // Obtener el valor de 'isMute' pasado desde MainActivity
+        isMute = getIntent().getBooleanExtra("isMute", false);
+
+        // ocultar la barra
+        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN);
+
+        // Obtener el tamaño de la pantalla
         Point point = new Point();
         getWindowManager().getDefaultDisplay().getSize(point);
 

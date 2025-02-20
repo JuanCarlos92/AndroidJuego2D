@@ -17,6 +17,7 @@ public class MainActivity extends AppCompatActivity {
         // Iniciar el juego
         findViewById(R.id.play).setOnClickListener(view -> {
             Intent intent = new Intent(this, GameActivity.class);
+            intent.putExtra("isMute", isMute); // Pasamos el valor de isMute
             startActivity(intent);
         });
 

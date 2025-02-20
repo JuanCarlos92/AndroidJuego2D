@@ -12,16 +12,27 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Juego2D"
         tools:targetApi="31">
+
+        <!-- Actividad de carga (SplashActivity) -->
         <activity
-            android:name=".MainActivity"
-            android:exported="true">
+            android:name=".SplashActivity"
+            android:exported="true"
+            android:label="Splash"
+            android:launchMode="singleTask"
+            android:theme="@style/Theme.AppCompat.NoActionBar"> <!-- Agregar android:exported -->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
-        <activity android:name=".GameActivity"/>
+
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"/>
+        <activity
+            android:name=".GameActivity"
+            android:exported="true" />
     </application>
 
 </manifest>

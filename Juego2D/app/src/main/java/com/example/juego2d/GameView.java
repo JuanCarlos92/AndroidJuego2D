@@ -6,9 +6,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.media.AudioAttributes;
-import android.media.AudioManager;
 import android.media.SoundPool;
-import android.os.Build;
 import android.view.MotionEvent;
 import android.view.SurfaceView;
 
@@ -38,15 +36,9 @@ public class GameView extends SurfaceView implements Runnable {
         this.activity = activity;
 
         // Configuración de los efectos de sonido dependiendo de la versión de Android
-        AudioAttributes audioAttributes = new AudioAttributes.Builder()
-                .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
-                .setUsage(AudioAttributes.USAGE_GAME)
-                .build();
+        AudioAttributes audioAttributes = new AudioAttributes.Builder().setContentType(AudioAttributes.CONTENT_TYPE_MUSIC).setUsage(AudioAttributes.USAGE_GAME).build();
 
-        soundPool = new SoundPool.Builder()
-                .setAudioAttributes(audioAttributes)
-                .setMaxStreams(5)
-                .build();
+        soundPool = new SoundPool.Builder().setAudioAttributes(audioAttributes).setMaxStreams(5).build();
 
         // Carga el sonido del disparo desde los recursos
         sound = soundPool.load(activity, R.raw.shoot, 1);
@@ -264,7 +256,6 @@ public class GameView extends SurfaceView implements Runnable {
         return true; // Devuelve true para continuar detectando eventos táctiles
     }
 
-
     // Metodo para generar un nuevo disparo desde la posición del personaje
     public void nuevaBala() {
         Bala bala = new Bala(getResources());
@@ -272,5 +263,10 @@ public class GameView extends SurfaceView implements Runnable {
         bala.y = avion.y + (avion.height / 2); // Se alinea al centro del personaje
         balas.add(bala); // Agrega la bala a la lista de balas activas
 
+        // Reproducir el sonido de disparo
+        if (!activity.isMute) {
+            soundPool.play(sound, 1, 1, 0, 0, 1);  // Reproduce el sonido
+
+        }
     }
 }

@@ -40,12 +40,12 @@ public class Pajaro {
         pajaro3 = Bitmap.createScaledBitmap(pajaro3, width, height, false);
         pajaro4 = Bitmap.createScaledBitmap(pajaro4, width, height, false);
 
-        // Inicializa la posición Y del pájaro fuera de la pantalla (arriba)
+        // Inicializa (la posición Y) del pájaro fuera de la pantalla (arriba)
         y = -height;
     }
 
     // Metodo que devuelve la imagen del pajaro correspondiente a la animacion
-    Bitmap getPajaro () {
+    Bitmap getPajaro() {
 
         // Controla el ciclo de animacion cambiando el frame en cada llamada
         if (birdCounter == 1) {

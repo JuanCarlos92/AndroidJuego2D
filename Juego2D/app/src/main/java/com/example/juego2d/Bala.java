@@ -13,9 +13,9 @@ public class Bala {
     int x, y, width, height;
     Bitmap bala;
 
-    // Constructor de la clase
+    // Constructor
     Bala(Resources res) {
-        // Carga la imagen del recurso
+        // Carga la imagen
         bala = BitmapFactory.decodeResource(res, R.drawable.bullet);
 
         // Obtiene las dimensiones de la imagen
@@ -34,6 +34,7 @@ public class Bala {
         bala = Bitmap.createScaledBitmap(bala, width, height, false);
 
     }
+
     // Metodo que devuelve la forma de colision de la baja
     Rect getColision() {
         return new Rect(x, y, x + width, y + height);
