@@ -36,7 +36,7 @@ Compila y ejecuta en un dispositivo físico o emulador.
 
 ## Capturas de Pantalla
 
-(Aquí puedes agregar capturas de pantalla del juego en acción)
+![Texto alternativo](img/captura.png)
 
 ## Mejoras Futuras
 
