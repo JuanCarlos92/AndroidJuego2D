@@ -1,21 +1,27 @@
-package com.example.juego2d;
+package com.example.juego2d.gameobject;
 
-import static com.example.juego2d.GameView.screenRatioX;
-import static com.example.juego2d.GameView.screenRatioY;
+import static com.example.juego2d.view.GameView.screenRatioX;
+import static com.example.juego2d.view.GameView.screenRatioY;
 
 import android.content.res.Resources;
 import android.graphics.BitmapFactory;
 import android.graphics.Rect;
 import android.graphics.Bitmap;
 
+import com.example.juego2d.R;
+
 public class Pajaro {
     public int speed = 20;
     public boolean wasShot = true;
-    int x = 0, y, width, height, birdCounter = 1;
+    public int x = 0;
+    public int y;
+    public int width;
+    public int height;
+    int birdCounter = 1;
     Bitmap pajaro1, pajaro2, pajaro3, pajaro4;
 
     // Constructor de la clase
-    Pajaro(Resources res) {
+    public Pajaro(Resources res) {
         // Carga las imágenes del pajaro
         pajaro1 = BitmapFactory.decodeResource(res, R.drawable.bird1);
         pajaro2 = BitmapFactory.decodeResource(res, R.drawable.bird2);
@@ -45,7 +51,7 @@ public class Pajaro {
     }
 
     // Metodo que devuelve la imagen del pajaro correspondiente a la animacion
-    Bitmap getPajaro() {
+    public Bitmap getPajaro() {
 
         // Controla el ciclo de animacion cambiando el frame en cada llamada
         if (birdCounter == 1) {
@@ -67,7 +73,7 @@ public class Pajaro {
     }
 
     // Metodo que devuelve la forma de colisión del pajaro
-    Rect getColision() {
+    public Rect getColision() {
         int padding = 10;  // Reduce la zona de colisión
         return new Rect(x + padding, y + padding, x + width - padding, y + height - padding);
     }

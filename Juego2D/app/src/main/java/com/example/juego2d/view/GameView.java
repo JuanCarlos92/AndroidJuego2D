@@ -1,4 +1,4 @@
-package com.example.juego2d;
+package com.example.juego2d.view;
 
 import android.content.Intent;
 import android.graphics.Canvas;
@@ -9,6 +9,14 @@ import android.media.AudioAttributes;
 import android.media.SoundPool;
 import android.view.MotionEvent;
 import android.view.SurfaceView;
+
+import com.example.juego2d.gameobject.Avion;
+import com.example.juego2d.Background;
+import com.example.juego2d.gameobject.Bala;
+import com.example.juego2d.GameActivity;
+import com.example.juego2d.MainActivity;
+import com.example.juego2d.gameobject.Pajaro;
+import com.example.juego2d.R;
 
 import java.util.ArrayList;
 import java.util.List;

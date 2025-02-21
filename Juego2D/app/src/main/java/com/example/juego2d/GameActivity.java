@@ -6,10 +6,12 @@ import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.juego2d.view.GameView;
+
 public class GameActivity extends AppCompatActivity {
 
     private GameView gameView;
-    boolean isMute;
+    public boolean isMute;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

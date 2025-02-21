@@ -1,22 +1,30 @@
-package com.example.juego2d;
+package com.example.juego2d.gameobject;
 
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Rect;
 
-import static com.example.juego2d.GameView.screenRatioX;
-import static com.example.juego2d.GameView.screenRatioY;
+import static com.example.juego2d.view.GameView.screenRatioX;
+import static com.example.juego2d.view.GameView.screenRatioY;
+
+import com.example.juego2d.R;
+import com.example.juego2d.view.GameView;
 
 public class Avion {
-    int toShoot = 0;
-    boolean isGoingUp = false;
-    int x, y, width, height, wingCounter = 0, shootCounter = 1;
+    public int toShoot = 0;
+    public boolean isGoingUp = false;
+    public int x;
+    public int y;
+    public int width;
+    public int height;
+    int wingCounter = 0;
+    int shootCounter = 1;
     Bitmap avion1, avion2, disparo1, disparo2, disparo3, disparo4, disparo5, muerte;
     private GameView gameView;
 
     // Constructor
-    Avion(GameView gameView, int screenY, Resources res) {
+    public Avion(GameView gameView, int screenY, Resources res) {
         this.gameView = gameView;
 
         // Carga las imagenes del avion
@@ -63,7 +71,7 @@ public class Avion {
     }
 
     // Metodo que devuelve la imagen del personaje dependiendo de su estado
-    Bitmap getAvion() {
+    public Bitmap getAvion() {
         if (toShoot != 0) {
 
             // Si el personaje esta disparando....
@@ -101,13 +109,13 @@ public class Avion {
     }
 
     // Metodo que devuelve la forma de colision del avion
-    Rect getColision() {
+    public Rect getColision() {
         int padding = 10;  // Reduce la zona de colisión
         return new Rect(x + padding, y + padding, x + width - padding, y + height - padding);
     }
 
     // Metodo que devuelve la imagen del avion cuando pierde
-    Bitmap getMuerte() {
+    public Bitmap getMuerte() {
         return muerte;
     }
 

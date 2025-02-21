@@ -1,20 +1,25 @@
-package com.example.juego2d;
+package com.example.juego2d.gameobject;
 
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Rect;
 
-import static com.example.juego2d.GameView.screenRatioX;
-import static com.example.juego2d.GameView.screenRatioY;
+import static com.example.juego2d.view.GameView.screenRatioX;
+import static com.example.juego2d.view.GameView.screenRatioY;
+
+import com.example.juego2d.R;
 
 public class Bala {
 
-    int x, y, width, height;
-    Bitmap bala;
+    public int x;
+    public int y;
+    int width;
+    int height;
+    public Bitmap bala;
 
     // Constructor
-    Bala(Resources res) {
+    public Bala(Resources res) {
         // Carga la imagen
         bala = BitmapFactory.decodeResource(res, R.drawable.bullet);
 
@@ -36,7 +41,7 @@ public class Bala {
     }
 
     // Metodo que devuelve la forma de colision de la baja
-    Rect getColision() {
+    public Rect getColision() {
         return new Rect(x, y, x + width, y + height);
     }
 
