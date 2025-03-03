@@ -10,6 +10,10 @@ import static com.example.juego2d.view.GameView.screenRatioY;
 
 import com.example.juego2d.R;
 
+/**
+ * Clase que representa una bala en el juego.
+ * La bala es un objeto que se dispara desde el avión.
+ */
 public class Bala {
 
     public int x;
@@ -18,7 +22,12 @@ public class Bala {
     int height;
     public Bitmap bala;
 
-    // Constructor
+    /**
+     * Constructor de la clase Bala.
+     * Carga y redimensiona la imagen de la bala según la pantalla.
+     *
+     * @param res Recursos de la aplicación para cargar la imagen de la bala.
+     */
     public Bala(Resources res) {
         // Carga la imagen
         bala = BitmapFactory.decodeResource(res, R.drawable.bullet);
@@ -28,8 +37,8 @@ public class Bala {
         height = bala.getHeight();
 
         // Redimensiona la imagen para reducir el tamaño
-        width /= 5;
-        height /= 5;
+        width /= 2;
+        height /= 2;
 
         // Ajusta las dimensiones de la bala la pantalla
         width = (int) (width * screenRatioX);
@@ -40,9 +49,12 @@ public class Bala {
 
     }
 
-    // Metodo que devuelve la forma de colision de la baja
+    /**
+     * Devuelve un rectángulo que representa el área de colisión de la bala.
+     *
+     * @return Rect con la posición y dimensiones de la bala.
+     */
     public Rect getColision() {
         return new Rect(x, y, x + width, y + height);
     }
-
 }

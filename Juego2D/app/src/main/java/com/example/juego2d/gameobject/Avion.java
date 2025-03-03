@@ -11,7 +11,11 @@ import static com.example.juego2d.view.GameView.screenRatioY;
 import com.example.juego2d.R;
 import com.example.juego2d.view.GameView;
 
+/**
+ * Clase que representa un avión en el juego.
+ */
 public class Avion {
+
     public int toShoot = 0;
     public boolean isGoingUp = false;
     public int x;
@@ -23,7 +27,13 @@ public class Avion {
     Bitmap avion1, avion2, disparo1, disparo2, disparo3, disparo4, disparo5, muerte;
     private GameView gameView;
 
-    // Constructor
+    /**
+     * Constructor de la clase Avion.
+     *
+     * @param gameView Vista del juego donde se dibujará el avión.
+     * @param screenY  Altura de la pantalla.
+     * @param res      Recursos de la aplicación para cargar imágenes.
+     */
     public Avion(GameView gameView, int screenY, Resources res) {
         this.gameView = gameView;
 
@@ -48,7 +58,7 @@ public class Avion {
         avion2 = Bitmap.createScaledBitmap(avion2, width, height, false);
 
         // Carga y redimensiona las imagenes de disparo
-        disparo1 = BitmapFactory.decodeResource(res, R.drawable.shoot1);
+        disparo1 = BitmapFactory.decodeResource(res, R.drawable.dead);
         disparo2 = BitmapFactory.decodeResource(res, R.drawable.shoot2);
         disparo3 = BitmapFactory.decodeResource(res, R.drawable.shoot3);
         disparo4 = BitmapFactory.decodeResource(res, R.drawable.shoot4);
@@ -70,7 +80,11 @@ public class Avion {
 
     }
 
-    // Metodo que devuelve la imagen del personaje dependiendo de su estado
+    /**
+     * Devuelve la imagen del avión según su estado.
+     *
+     * @return La imagen actual del avión.
+     */
     public Bitmap getAvion() {
         if (toShoot != 0) {
 
@@ -108,15 +122,22 @@ public class Avion {
         return avion2;
     }
 
-    // Metodo que devuelve la forma de colision del avion
+    /**
+     * Obtiene el rectángulo de colisión del avión.
+     *
+     * @return Un objeto Rect que representa la zona de colisión.
+     */
     public Rect getColision() {
-        int padding = 10;  // Reduce la zona de colisión
-        return new Rect(x + padding, y + padding, x + width - padding, y + height - padding);
+        int MargenColision = 100;  // Reduce la zona de colisión
+        return new Rect(x + MargenColision, y + MargenColision, x + width - MargenColision, y + height - MargenColision);
     }
 
-    // Metodo que devuelve la imagen del avion cuando pierde
+    /**
+     * Devuelve la imagen del avión cuando ha sido destruido.
+     *
+     * @return Imagen del avión destruido.
+     */
     public Bitmap getMuerte() {
         return muerte;
     }
-
 }

@@ -10,7 +10,11 @@ import android.graphics.Bitmap;
 
 import com.example.juego2d.R;
 
+/**
+ * Clase que representa un pájaro enemigo en el juego.
+ */
 public class Pajaro {
+
     public int speed = 20;
     public boolean wasShot = true;
     public int x = 0;
@@ -20,7 +24,11 @@ public class Pajaro {
     int birdCounter = 1;
     Bitmap pajaro1, pajaro2, pajaro3, pajaro4;
 
-    // Constructor de la clase
+    /**
+     * Constructor de la clase Pajaro.
+     *
+     * @param res Recursos para cargar las imágenes del pájaro.
+     */
     public Pajaro(Resources res) {
         // Carga las imágenes del pajaro
         pajaro1 = BitmapFactory.decodeResource(res, R.drawable.bird1);
@@ -50,7 +58,11 @@ public class Pajaro {
         y = -height;
     }
 
-    // Metodo que devuelve la imagen del pajaro correspondiente a la animacion
+    /**
+     * Devuelve la imagen del pájaro correspondiente a la animación.
+     *
+     * @return Bitmap de la imagen actual del pájaro en la animación.
+     */
     public Bitmap getPajaro() {
 
         // Controla el ciclo de animacion cambiando el frame en cada llamada
@@ -72,9 +84,13 @@ public class Pajaro {
         return pajaro4;
     }
 
-    // Metodo que devuelve la forma de colisión del pajaro
+    /**
+     * Devuelve la forma de colisión del pájaro.
+     *
+     * @return Rect que representa la zona de colisión del pájaro.
+     */
     public Rect getColision() {
-        int padding = 10;  // Reduce la zona de colisión
-        return new Rect(x + padding, y + padding, x + width - padding, y + height - padding);
+        int MargenColision = 50;  // Reduce la zona de colisión
+        return new Rect(x + MargenColision, y + MargenColision, x + width - MargenColision, y + height - MargenColision);
     }
 }

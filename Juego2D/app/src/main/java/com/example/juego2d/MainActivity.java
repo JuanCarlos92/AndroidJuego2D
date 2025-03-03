@@ -6,9 +6,19 @@ import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+/**
+ * Actividad principal de la aplicación que gestiona la pantalla de inicio.
+ * Esta actividad permite iniciar el juego, salir de la aplicación y controlar el estado de muteo del sonido.
+ */
 public class MainActivity extends AppCompatActivity {
     private boolean isMute = false; // Inicializa isMute en false por defecto
 
+    /**
+     * Metodo que se llama al crear la actividad.
+     * Inicializa los elementos de la interfaz de usuario y establece los oyentes de eventos para los botones.
+     *
+     * @param savedInstanceState El estado guardado de la actividad anterior, si existe.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

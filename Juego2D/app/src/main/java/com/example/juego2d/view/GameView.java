@@ -22,6 +22,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * Clase que gestiona la vista y la lógica del juego en la pantalla.
+ * Esta clase se encarga de dibujar los elementos del juego y manejar la lógica de la jugabilidad,
+ * como el movimiento de los objetos, la detección de colisiones y la actualización del puntaje.
+ */
 public class GameView extends SurfaceView implements Runnable {
 
     private Thread thread;
@@ -38,7 +43,13 @@ public class GameView extends SurfaceView implements Runnable {
     private GameActivity activity;
     private Background background1, background2;
 
-    // Constructor que inicializa la vista del juego
+    /**
+     * Constructor que inicializa la vista del juego.
+     *
+     * @param activity La actividad principal del juego (GameActivity).
+     * @param screenX  Ancho de la pantalla en píxeles.
+     * @param screenY  Alto de la pantalla en píxeles.
+     */
     public GameView(GameActivity activity, int screenX, int screenY) {
         super(activity);
         this.activity = activity;
@@ -68,7 +79,6 @@ public class GameView extends SurfaceView implements Runnable {
         // Lista para las balas
         balas = new ArrayList<>();
 
-
         // Configuración de la fuente para mostrar el puntaje en pantalla
         paint = new Paint();
         paint.setTextSize(128);
@@ -83,6 +93,11 @@ public class GameView extends SurfaceView implements Runnable {
         random = new Random(); // Generador Random para las posiciones
     }
 
+    /**
+     * Metodo que ejecuta el bucle principal del juego.
+     * Este metodo actualiza la lógica del juego, dibuja los elementos en pantalla
+     * y controla la velocidad de actualización.
+     */
     @Override
     public void run() {
         while (isPlaying) {
@@ -92,6 +107,9 @@ public class GameView extends SurfaceView implements Runnable {
         }
     }
 
+    /**
+     * Metodo que actualiza la lógica del juego, moviendo los elementos y verificando las colisiones.
+     */
     private void update() {
         // Movimiento del fondo (simula desplazamiento)
         background1.x -= 10 * screenRatioX;
@@ -159,7 +177,10 @@ public class GameView extends SurfaceView implements Runnable {
         }
     }
 
-    // Metodo encargado de dibujar los elementos en la pantalla
+    /**
+     * Metodo que dibuja los elementos del juego en la pantalla.
+     * Dibuja los fondos, el avión, los pájaros, las balas y el puntaje.
+     */
     private void draw() {
         // Verifica si la superficie de dibujo es válida
         if (getHolder().getSurface().isValid()) {
@@ -199,7 +220,10 @@ public class GameView extends SurfaceView implements Runnable {
         }
     }
 
-    // Metodo que espera unos segundos antes de salir del juego tras un Game Over
+    /**
+     * Metodo que espera unos segundos antes de salir del juego tras un Game Over.
+     * Después de la espera, vuelve a la pantalla principal del juego.
+     */
     private void waitBeforeExiting() {
         try {
             Thread.sleep(3000); // Pausa durante 3 segundos
@@ -211,7 +235,9 @@ public class GameView extends SurfaceView implements Runnable {
 
     }
 
-    // Metodo que controla la velocidad del juego aplicando una pausa breve en cada iteración del bucle principal
+    /**
+     * Metodo que controla la velocidad del juego aplicando una pausa breve en cada iteración del bucle principal.
+     */
     private void sleep() {
         try {
             Thread.sleep(17);
@@ -220,14 +246,18 @@ public class GameView extends SurfaceView implements Runnable {
         }
     }
 
-    // Metodo para reanudar el juego iniciando el hilo principal
+    /**
+     * Metodo que reanuda el juego iniciando el hilo principal.
+     */
     public void resume() {
         isPlaying = true;
         thread = new Thread(this);
         thread.start();
     }
 
-    // Metodo para pausar el juego deteniendo el hilo principal
+    /**
+     * Metodo que pausa el juego deteniendo el hilo principal.
+     */
     public void pause() {
         try {
             isPlaying = false;
@@ -237,7 +267,12 @@ public class GameView extends SurfaceView implements Runnable {
         }
     }
 
-    // Metodo que detecta la interacción del usuario con la pantalla táctil
+    /**
+     * Metodo que detecta la interacción del usuario con la pantalla táctil.
+     *
+     * @param event El evento de toque.
+     * @return true si el evento ha sido procesado correctamente.
+     */
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         int action = event.getActionMasked(); // Obtener el tipo de evento
@@ -264,7 +299,16 @@ public class GameView extends SurfaceView implements Runnable {
         return true; // Devuelve true para continuar detectando eventos táctiles
     }
 
-    // Metodo para generar un nuevo disparo desde la posición del personaje
+    /**
+     * Genera un nuevo disparo desde la posición actual del avión.
+     * Crea una nueva instancia de la clase {@link Bala}, establece su posición justo
+     * frente al avión y la alinea con el centro del mismo. Luego, agrega la bala
+     * a la lista de balas activas.
+     * -
+     * También reproduce un sonido de disparo, a menos que el juego esté en modo mudo.
+     *
+     * @see Bala
+     */
     public void nuevaBala() {
         Bala bala = new Bala(getResources());
         bala.x = avion.x + avion.width; // La bala aparece justo delante del personaje

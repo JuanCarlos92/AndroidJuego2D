@@ -8,11 +8,22 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.juego2d.view.GameView;
 
+/**
+ * Actividad principal del juego que gestiona la vista del juego y la interacción con el usuario.
+ * Esta actividad se encarga de inicializar y mostrar la pantalla del juego, controlar el muteo del sonido,
+ * y gestionar las pausas y reanudaciones del juego cuando la aplicación se minimiza o vuelve a primer plano.
+ */
 public class GameActivity extends AppCompatActivity {
 
     private GameView gameView;
     public boolean isMute;
 
+    /**
+     * Metodo que se llama al crear la actividad.
+     * Inicializa la vista del juego y configura la pantalla a pantalla completa.
+     *
+     * @param savedInstanceState El estado guardado de la actividad anterior, si existe.
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,14 +43,20 @@ public class GameActivity extends AppCompatActivity {
         setContentView(gameView);
     }
 
-    // Metodo cuando se pausa el juego (por ejemplo, al minimizar la app)
+    /**
+     * Metodo que se llama cuando la actividad se pausa, por ejemplo, cuando la aplicación se minimiza.
+     * En este metodo se pausa el juego.
+     */
     @Override
     protected void onPause() {
         super.onPause();
         gameView.pause();
     }
 
-    // Metodo cuando se reanuda el juego (por ejemplo, al volver a la app)
+    /**
+     * Metodo que se llama cuando la actividad se reanuda, por ejemplo, cuando la aplicación vuelve al primer plano.
+     * En este metodo se reanuda el juego.
+     */
     @Override
     protected void onResume() {
         super.onResume();
