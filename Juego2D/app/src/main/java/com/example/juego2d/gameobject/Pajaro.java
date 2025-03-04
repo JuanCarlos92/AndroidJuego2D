@@ -90,7 +90,7 @@ public class Pajaro {
      * @return Rect que representa la zona de colisión del pájaro.
      */
     public Rect getColision() {
-        int MargenColision = 50;  // Reduce la zona de colisión
+        int MargenColision = 70;  // Reduce la zona de colisión
         return new Rect(x + MargenColision, y + MargenColision, x + width - MargenColision, y + height - MargenColision);
     }
 }

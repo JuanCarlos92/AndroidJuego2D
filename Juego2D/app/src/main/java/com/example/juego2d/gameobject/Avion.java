@@ -58,7 +58,7 @@ public class Avion {
         avion2 = Bitmap.createScaledBitmap(avion2, width, height, false);
 
         // Carga y redimensiona las imagenes de disparo
-        disparo1 = BitmapFactory.decodeResource(res, R.drawable.dead);
+        disparo1 = BitmapFactory.decodeResource(res, R.drawable.shoot1);
         disparo2 = BitmapFactory.decodeResource(res, R.drawable.shoot2);
         disparo3 = BitmapFactory.decodeResource(res, R.drawable.shoot3);
         disparo4 = BitmapFactory.decodeResource(res, R.drawable.shoot4);

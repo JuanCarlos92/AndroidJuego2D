@@ -10,6 +10,7 @@ import android.media.SoundPool;
 import android.view.MotionEvent;
 import android.view.SurfaceView;
 
+import com.example.juego2d.GameOverActivity;
 import com.example.juego2d.gameobject.Avion;
 import com.example.juego2d.Background;
 import com.example.juego2d.gameobject.Bala;
@@ -42,6 +43,8 @@ public class GameView extends SurfaceView implements Runnable {
     private Avion avion;
     private GameActivity activity;
     private Background background1, background2;
+    private float lastTouchY = 0; // Variable para rastrear la posición del toque
+
 
     /**
      * Constructor que inicializa la vista del juego.
@@ -112,8 +115,8 @@ public class GameView extends SurfaceView implements Runnable {
      */
     private void update() {
         // Movimiento del fondo (simula desplazamiento)
-        background1.x -= 10 * screenRatioX;
-        background2.x -= 10 * screenRatioX;
+        background1.x -= 5 * screenRatioX;
+        background2.x -= 5 * screenRatioX;
 
         if (background1.x + background1.background.getWidth() < 0) {
             background1.x = screenX;
@@ -170,8 +173,19 @@ public class GameView extends SurfaceView implements Runnable {
             }
 
             // Si el pájaro colisiona con el personaje, el juego termina
+//            if (Rect.intersects(pajaro.getColision(), avion.getColision())) {
+//                isGameOver = true;
+//                return;
+//            }
+
             if (Rect.intersects(pajaro.getColision(), avion.getColision())) {
                 isGameOver = true;
+                activity.runOnUiThread(() -> {
+                    Intent intent = new Intent(activity, GameOverActivity.class);
+                    intent.putExtra("score", score); // Enviar la puntuación
+                    activity.startActivity(intent);
+                    activity.finish();
+                });
                 return;
             }
         }
@@ -204,7 +218,8 @@ public class GameView extends SurfaceView implements Runnable {
                 isPlaying = false;
                 canvas.drawBitmap(avion.getMuerte(), avion.x, avion.y, paint);
                 getHolder().unlockCanvasAndPost(canvas);
-                waitBeforeExiting(); // Espera antes de salir
+
+                //waitBeforeExiting(); // Espera antes de salir
                 return;
             }
 
@@ -275,28 +290,42 @@ public class GameView extends SurfaceView implements Runnable {
      */
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        int action = event.getActionMasked(); // Obtener el tipo de evento
-        int pointerIndex = event.getActionIndex(); // Índice del puntero (dedo)
+        int action = event.getActionMasked(); // Tipo de evento
+        int pointerIndex = event.getActionIndex(); // Índice del puntero
+
+        float x = event.getX(pointerIndex);
+        float y = event.getY(pointerIndex);
 
         switch (action) {
             case MotionEvent.ACTION_DOWN:
-            case MotionEvent.ACTION_POINTER_DOWN: // Detecta múltiples toques
-                if (event.getX(pointerIndex) < screenX / 2) {
-                    avion.isGoingUp = true; // Mover hacia arriba
-                } else {
-                    avion.toShoot++; // Disparar
+            case MotionEvent.ACTION_POINTER_DOWN: // Se detecta un toque
+                if (x < (float) screenX / 2) { // Lado izquierdo de la pantalla
+                    lastTouchY = y; // Guardar posición inicial del toque
+                } else { // Lado derecho: disparo
+                    avion.toShoot++;
+                }
+                break;
+
+            case MotionEvent.ACTION_MOVE: // Detectar el desplazamiento
+                if (x < (float) screenX / 2) { // Solo si es en la izquierda
+                    if (y < lastTouchY) { // Mover arriba
+                        avion.isGoingUp = true;
+                    } else if (y > lastTouchY) { // Mover abajo
+                        avion.isGoingUp = false;
+                    }
+                    lastTouchY = y; // Actualizar la última posición
                 }
                 break;
 
             case MotionEvent.ACTION_UP:
-            case MotionEvent.ACTION_POINTER_UP: // Se suelta un dedo
-                if (event.getX(pointerIndex) < screenX / 2) {
-                    avion.isGoingUp = false; // Detener movimiento
+            case MotionEvent.ACTION_POINTER_UP: // Se suelta el dedo
+                if (x < (float) screenX / 2) {
+                    avion.isGoingUp = false; // Detener movimiento cuando se suelta
                 }
                 break;
         }
 
-        return true; // Devuelve true para continuar detectando eventos táctiles
+        return true; // Seguir detectando eventos táctiles
     }
 
     /**

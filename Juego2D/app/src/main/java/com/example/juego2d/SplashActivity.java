@@ -1,5 +1,6 @@
 package com.example.juego2d;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -10,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
  * Actividad de inicio (Splash) que se muestra cuando se abre la aplicación.
  * Esta actividad muestra una pantalla de bienvenida durante 3 segundos antes de redirigir a la actividad principal.
  */
+@SuppressLint("CustomSplashScreen")
 public class SplashActivity extends AppCompatActivity {
 
     /**

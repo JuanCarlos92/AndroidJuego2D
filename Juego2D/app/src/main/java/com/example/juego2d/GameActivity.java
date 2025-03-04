@@ -47,11 +47,11 @@ public class GameActivity extends AppCompatActivity {
      * Metodo que se llama cuando la actividad se pausa, por ejemplo, cuando la aplicación se minimiza.
      * En este metodo se pausa el juego.
      */
-    @Override
-    protected void onPause() {
-        super.onPause();
-        gameView.pause();
-    }
+//    @Override
+//    protected void onPause() {
+//        super.onPause();
+//        gameView.pause();
+//    }
 
     /**
      * Metodo que se llama cuando la actividad se reanuda, por ejemplo, cuando la aplicación vuelve al primer plano.

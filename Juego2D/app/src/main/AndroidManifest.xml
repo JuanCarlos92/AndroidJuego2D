@@ -33,6 +33,9 @@
         <activity
             android:name=".GameActivity"
             android:exported="true" />
+        <activity
+            android:name=".GameOverActivity"
+            android:exported="true" />
     </application>
 
 </manifest>
