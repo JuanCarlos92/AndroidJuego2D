@@ -1,11 +1,13 @@
-package com.example.juego2d;
+package com.example.juego2d.ui.Activity;
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.juego2d.R;
+import com.example.juego2d.utils.tiempo.TiempoDelay;
+import com.example.juego2d.utils.navegacion.NavegacionDePantallas;
 
 /**
  * Actividad de inicio (Splash) que se muestra cuando se abre la aplicación.
@@ -26,12 +28,11 @@ public class SplashActivity extends AppCompatActivity {
         setContentView(R.layout.activity_splash);
 
         // Delay para esperar 3 segundos
-        new Handler().postDelayed(new Runnable() {
+        TiempoDelay.postDelayed(new Runnable() {
             @Override
             public void run() {
                 // Cambiar al menu
-                Intent intent = new Intent(SplashActivity.this, MainActivity.class);
-                startActivity(intent);
+                NavegacionDePantallas.navigateTo(SplashActivity.this, MainActivity.class);
                 finish();
             }
         }, 3000);  // 3000 milisegundos = 3 segundos

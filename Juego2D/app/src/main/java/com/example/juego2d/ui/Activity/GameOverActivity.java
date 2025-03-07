@@ -1,10 +1,13 @@
-package com.example.juego2d;
+package com.example.juego2d.ui.Activity;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.TextView;
+
+import com.example.juego2d.R;
+import com.example.juego2d.utils.navegacion.NavegacionDePantallas;
+import com.example.juego2d.utils.ui.BotonesYTexto;
 
 public class GameOverActivity extends Activity {
 
@@ -18,23 +21,22 @@ public class GameOverActivity extends Activity {
 
         // Mostrar la puntuación en el TextView
         TextView scoreTextView = findViewById(R.id.textScore);
-        scoreTextView.setText("Puntuación: " + score);
+        BotonesYTexto.setTextViewText(scoreTextView, "Score: " + score);
 
         // Botón para volver al menú principal
         Button btnMenu = findViewById(R.id.btnMenu);
-        btnMenu.setOnClickListener(v -> {
-            Intent intent = new Intent(GameOverActivity.this, MainActivity.class);
-            startActivity(intent);
+        BotonesYTexto.setButtonOnClickListener(btnMenu, v -> {
+            NavegacionDePantallas.navigateTo(GameOverActivity.this, MainActivity.class);
             finish();
         });
 
         // Botón para reiniciar el juego
         Button btnRestart = findViewById(R.id.btnRestart);
-        btnRestart.setOnClickListener(v -> {
-            Intent intent = new Intent(GameOverActivity.this, GameActivity.class);
-            startActivity(intent);
+        BotonesYTexto.setButtonOnClickListener(btnRestart, v -> {
+            NavegacionDePantallas.navigateTo(GameOverActivity.this, GameActivity.class);
             finish();
         });
     }
 }
+
 

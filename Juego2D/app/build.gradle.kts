@@ -40,4 +40,8 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
+
+    // Dependencia de AdMob
+    implementation("com.google.android.gms:play-services-ads:22.4.0")
+
 }

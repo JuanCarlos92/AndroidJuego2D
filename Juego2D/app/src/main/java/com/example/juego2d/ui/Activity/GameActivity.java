@@ -1,12 +1,12 @@
-package com.example.juego2d;
+package com.example.juego2d.ui.Activity;
 
 import android.graphics.Point;
 import android.os.Bundle;
-import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.juego2d.view.GameView;
+import com.example.juego2d.ui.views.GameView;
+import com.example.juego2d.utils.ui.PantallaCompleta;
 
 /**
  * Actividad principal del juego que gestiona la vista del juego y la interacción con el usuario.
@@ -31,27 +31,16 @@ public class GameActivity extends AppCompatActivity {
         // Obtener el valor de 'isMute' pasado desde MainActivity
         isMute = getIntent().getBooleanExtra("isMute", false);
 
-        // ocultar la barra
-        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN);
+        // Configurar la pantalla a pantalla completa
+        PantallaCompleta.setFullScreen(this);
 
         // Obtener el tamaño de la pantalla
-        Point point = new Point();
-        getWindowManager().getDefaultDisplay().getSize(point);
+        Point screenSize = PantallaCompleta.getScreenSize(this);
 
         // Crea una instancia de GameView con el tamaño de la pantalla
-        gameView = new GameView(this, point.x, point.y);
+        gameView = new GameView(this, screenSize.x, screenSize.y);
         setContentView(gameView);
     }
-
-    /**
-     * Metodo que se llama cuando la actividad se pausa, por ejemplo, cuando la aplicación se minimiza.
-     * En este metodo se pausa el juego.
-     */
-//    @Override
-//    protected void onPause() {
-//        super.onPause();
-//        gameView.pause();
-//    }
 
     /**
      * Metodo que se llama cuando la actividad se reanuda, por ejemplo, cuando la aplicación vuelve al primer plano.
@@ -63,5 +52,3 @@ public class GameActivity extends AppCompatActivity {
         gameView.resume();
     }
 }
-
-

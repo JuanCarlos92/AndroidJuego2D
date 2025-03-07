@@ -19,7 +19,7 @@
         android:id="@+id/textScore"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Puntuación: 0"
+        android:text="Score: 0"
         android:textColor="#FFFFFF"
         android:textSize="30sp"
         android:layout_marginTop="20dp" />
@@ -28,7 +28,7 @@
         android:id="@+id/btnRestart"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Reiniciar"
+        android:text="Reset"
         android:textSize="20sp"
         android:layout_marginTop="30dp"/>
 
@@ -36,7 +36,7 @@
         android:id="@+id/btnMenu"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Menú Principal"
+        android:text="Main Menu"
         android:textSize="20sp"
         android:layout_marginTop="15dp"/>
 </LinearLayout>

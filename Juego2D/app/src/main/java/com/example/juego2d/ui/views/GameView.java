@@ -1,22 +1,22 @@
-package com.example.juego2d.view;
+package com.example.juego2d.ui.views;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Rect;
 import android.media.AudioAttributes;
 import android.media.SoundPool;
 import android.view.MotionEvent;
 import android.view.SurfaceView;
 
-import com.example.juego2d.GameOverActivity;
-import com.example.juego2d.gameobject.Avion;
-import com.example.juego2d.Background;
-import com.example.juego2d.gameobject.Bala;
-import com.example.juego2d.GameActivity;
-import com.example.juego2d.MainActivity;
-import com.example.juego2d.gameobject.Pajaro;
+import com.example.juego2d.colision.Colisionador;
+import com.example.juego2d.ui.Activity.GameOverActivity;
+import com.example.juego2d.model.Avion;
+import com.example.juego2d.model.Bala;
+import com.example.juego2d.ui.Activity.GameActivity;
+import com.example.juego2d.ui.Activity.MainActivity;
+import com.example.juego2d.model.Pajaro;
 import com.example.juego2d.R;
 
 import java.util.ArrayList;
@@ -28,6 +28,7 @@ import java.util.Random;
  * Esta clase se encarga de dibujar los elementos del juego y manejar la lógica de la jugabilidad,
  * como el movimiento de los objetos, la detección de colisiones y la actualización del puntaje.
  */
+@SuppressLint("ViewConstructor")
 public class GameView extends SurfaceView implements Runnable {
 
     private Thread thread;
@@ -127,8 +128,11 @@ public class GameView extends SurfaceView implements Runnable {
         }
 
         // Movimiento del avión
-        if (avion.isGoingUp) avion.y -= 30 * screenRatioY;
-        else avion.y += 30 * screenRatioY;
+        if (avion.isGoingUp) {
+            avion.y -= 30 * screenRatioY;
+        } else if (avion.isGoingDown) {
+            avion.y += 30 * screenRatioY;
+        }
 
         // Evita que el avión salga de los límites de la pantalla
         if (avion.y < 0) avion.y = 0;
@@ -143,7 +147,7 @@ public class GameView extends SurfaceView implements Runnable {
 
             // Verifica colisiones entre balas y aves
             for (Pajaro pajaro : pajaros) {
-                if (Rect.intersects(pajaro.getColision(), bala.getColision())) {
+                if (Colisionador.verificarColisionBalaPajaro(bala, pajaro)) {
                     score++; // Incrementa el puntaje
                     pajaro.x = -500; // Elimina el pájaro de la pantalla
                     bala.x = screenX + 500; // Elimina la bala
@@ -155,6 +159,7 @@ public class GameView extends SurfaceView implements Runnable {
         balas.removeAll(trash);
         // Mueve el pájaro hacia la izquierda según su velocidad
         for (Pajaro pajaro : pajaros) {
+            pajaro.y = Math.max(pajaro.y, screenY / 4);
             pajaro.x -= pajaro.speed;
 
             // Si el pájaro sale completamente de la pantalla por la izquierda
@@ -172,13 +177,7 @@ public class GameView extends SurfaceView implements Runnable {
                 pajaro.wasShot = false; // Indica que no ha sido derribado en esta nueva aparición
             }
 
-            // Si el pájaro colisiona con el personaje, el juego termina
-//            if (Rect.intersects(pajaro.getColision(), avion.getColision())) {
-//                isGameOver = true;
-//                return;
-//            }
-
-            if (Rect.intersects(pajaro.getColision(), avion.getColision())) {
+            if (Colisionador.verificarColisionAvionPajaro(avion, pajaro)) {
                 isGameOver = true;
                 activity.runOnUiThread(() -> {
                     Intent intent = new Intent(activity, GameOverActivity.class);
@@ -271,23 +270,12 @@ public class GameView extends SurfaceView implements Runnable {
     }
 
     /**
-     * Metodo que pausa el juego deteniendo el hilo principal.
-     */
-    public void pause() {
-        try {
-            isPlaying = false;
-            thread.join();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
-
-    /**
      * Metodo que detecta la interacción del usuario con la pantalla táctil.
      *
      * @param event El evento de toque.
      * @return true si el evento ha sido procesado correctamente.
      */
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         int action = event.getActionMasked(); // Tipo de evento
@@ -310,8 +298,10 @@ public class GameView extends SurfaceView implements Runnable {
                 if (x < (float) screenX / 2) { // Solo si es en la izquierda
                     if (y < lastTouchY) { // Mover arriba
                         avion.isGoingUp = true;
+                        avion.isGoingDown = false;
                     } else if (y > lastTouchY) { // Mover abajo
                         avion.isGoingUp = false;
+                        avion.isGoingDown = true;
                     }
                     lastTouchY = y; // Actualizar la última posición
                 }
@@ -321,6 +311,7 @@ public class GameView extends SurfaceView implements Runnable {
             case MotionEvent.ACTION_POINTER_UP: // Se suelta el dedo
                 if (x < (float) screenX / 2) {
                     avion.isGoingUp = false; // Detener movimiento cuando se suelta
+                    avion.isGoingDown = false;
                 }
                 break;
         }

@@ -3,48 +3,61 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".ui.Activity.MainActivity">
 
+    <!-- Fondo -->
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:src="@drawable/background_glacial"
-        android:scaleType="centerCrop"/>
+        android:scaleType="centerCrop"
+        android:src="@drawable/background_glacial" />
 
-    <TextView
-        android:layout_width="wrap_content"
+    <!-- Contenedor del anuncio -->
+    <FrameLayout
+        android:id="@+id/adContainerView"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@id/play"
-        android:layout_centerHorizontal="true"
-        android:text="Juego 2D"
-        android:textColor="#ffffff"
-        android:textSize="48sp" />
+        android:layout_gravity="center_horizontal" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Play"
-        android:textSize="64sp"
-        android:layout_centerInParent="true"
-        android:textColor="#000000"
-        android:id="@+id/play"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Exit"
-        android:textSize="64sp"
-        android:textColor="#000000"
-        android:id="@+id/exit"
-        android:layout_margin="16dp"
-        android:layout_alignParentRight="true"/>
-
+    <!-- Titulo -->
     <ImageView
+        android:id="@+id/logo"
+        android:layout_width="376dp"
+        android:layout_height="75dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="70dp"
+        android:src="@drawable/title" />
+
+    <!-- Play -->
+    <ImageView
+        android:id="@+id/play"
+        android:layout_width="173dp"
+        android:layout_height="57dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="128dp"
+        android:contentDescription="Play"
+        android:src="@drawable/play" />
+
+    <!-- Exit -->
+    <ImageView
+        android:id="@+id/exit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="17dp"
+        android:layout_marginBottom="8dp"
+        android:contentDescription="Exit"
+        android:src="@drawable/exit" />
+
+    <!-- Audio -->
+    <ImageView
+        android:id="@+id/volumeCtrl"
         android:layout_width="36dp"
         android:layout_height="36dp"
         android:layout_alignParentBottom="true"
         android:layout_margin="16dp"
-        android:id="@+id/volumeCtrl"
-        android:src="@drawable/ic_volume_up_black_24dp"/>
+        android:src="@drawable/ic_volume_up_black_24dp" />
 
 </RelativeLayout>

@@ -1,15 +1,14 @@
-package com.example.juego2d.gameobject;
+package com.example.juego2d.model;
 
 import android.content.res.Resources;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Rect;
 
-import static com.example.juego2d.view.GameView.screenRatioX;
-import static com.example.juego2d.view.GameView.screenRatioY;
+import static com.example.juego2d.ui.views.GameView.screenRatioX;
+import static com.example.juego2d.ui.views.GameView.screenRatioY;
 
 import com.example.juego2d.R;
-import com.example.juego2d.view.GameView;
+import com.example.juego2d.utils.graficos.CargarImg;
+import com.example.juego2d.ui.views.GameView;
 
 /**
  * Clase que representa un avión en el juego.
@@ -17,7 +16,7 @@ import com.example.juego2d.view.GameView;
 public class Avion {
 
     public int toShoot = 0;
-    public boolean isGoingUp = false;
+    public boolean isGoingUp = false, isGoingDown = false;
     public int x;
     public int y;
     public int width;
@@ -37,42 +36,27 @@ public class Avion {
     public Avion(GameView gameView, int screenY, Resources res) {
         this.gameView = gameView;
 
-        // Carga las imagenes del avion
-        avion1 = BitmapFactory.decodeResource(res, R.drawable.fly1);
-        avion2 = BitmapFactory.decodeResource(res, R.drawable.fly2);
-
-        // Obtiene las dimensiones de las imagenes
-        width = avion1.getWidth();
-        height = avion1.getHeight();
-
-        // Reduce el tamaño de las imagenes
-        width /= 4;
-        height /= 4;
+        // Define las dimensiones deseadas para las imágenes
+        width = 500; // Ancho deseado
+        height = 500; // Alto deseado
 
         // Ajusta las dimensiones segun la pantalla
         width = (int) (width * screenRatioX);
         height = (int) (height * screenRatioY);
 
-        // Redimensiona las imagenes del avion normal
-        avion1 = Bitmap.createScaledBitmap(avion1, width, height, false);
-        avion2 = Bitmap.createScaledBitmap(avion2, width, height, false);
+        // Carga y redimensiona las imagenes del avion normal
+        avion1 = CargarImg.loadAndResizeImage(res, R.drawable.fly1, width, height);
+        avion2 = CargarImg.loadAndResizeImage(res, R.drawable.fly2, width, height);
 
         // Carga y redimensiona las imagenes de disparo
-        disparo1 = BitmapFactory.decodeResource(res, R.drawable.shoot1);
-        disparo2 = BitmapFactory.decodeResource(res, R.drawable.shoot2);
-        disparo3 = BitmapFactory.decodeResource(res, R.drawable.shoot3);
-        disparo4 = BitmapFactory.decodeResource(res, R.drawable.shoot4);
-        disparo5 = BitmapFactory.decodeResource(res, R.drawable.shoot5);
-
-        disparo1 = Bitmap.createScaledBitmap(disparo1, width, height, false);
-        disparo2 = Bitmap.createScaledBitmap(disparo2, width, height, false);
-        disparo3 = Bitmap.createScaledBitmap(disparo3, width, height, false);
-        disparo4 = Bitmap.createScaledBitmap(disparo4, width, height, false);
-        disparo5 = Bitmap.createScaledBitmap(disparo5, width, height, false);
+        disparo1 = CargarImg.loadAndResizeImage(res, R.drawable.shoot1, width, height);
+        disparo2 = CargarImg.loadAndResizeImage(res, R.drawable.shoot2, width, height);
+        disparo3 = CargarImg.loadAndResizeImage(res, R.drawable.shoot3, width, height);
+        disparo4 = CargarImg.loadAndResizeImage(res, R.drawable.shoot4, width, height);
+        disparo5 = CargarImg.loadAndResizeImage(res, R.drawable.shoot5, width, height);
 
         // Carga y redimensiona la imagen del avion roto
-        muerte = BitmapFactory.decodeResource(res, R.drawable.dead);
-        muerte = Bitmap.createScaledBitmap(muerte, width, height, false);
+        muerte = CargarImg.loadAndResizeImage(res, R.drawable.dead, width, height);
 
         // Posiciona el personaje en el centro vertical de la pantalla
         y = screenY / 2;
@@ -120,16 +104,6 @@ public class Avion {
         }
         wingCounter--;
         return avion2;
-    }
-
-    /**
-     * Obtiene el rectángulo de colisión del avión.
-     *
-     * @return Un objeto Rect que representa la zona de colisión.
-     */
-    public Rect getColision() {
-        int MargenColision = 100;  // Reduce la zona de colisión
-        return new Rect(x + MargenColision, y + MargenColision, x + width - MargenColision, y + height - MargenColision);
     }
 
     /**
