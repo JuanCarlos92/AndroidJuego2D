@@ -1,20 +1,34 @@
-# Juego de Avion - Android (Java)
+# BirdWars - Juego de Android (Java)
 
 ## Descripción
 
-Este es un juego desarrollado en Android utilizando Java, donde el jugador controla un avión y debe evitar chocar con pájaros mientras los derriba para sumar puntos.
+Este es un juego desarrollado en Android utilizando Java, donde el jugador controla un avión y debe evitar colisionar con los pájaros mientras los derriba para sumar puntos.
 
 ## Mecánica del Juego
 
-El avión asciende o desciende según las pulsaciones en la parte izquierda de la pantalla.
+- El avión asciende o desciende según las pulsaciones en la parte izquierda de la pantalla.
 
-La parte derecha de la pantalla permite disparar para derribar a los pájaros.
+- La parte derecha de la pantalla permite disparar para derribar a los pájaros.
 
-Los pájaros aparecen aleatoriamente en la pantalla.
+- Los pájaros aparecen aleatoriamente en la pantalla.
 
-Si el avión choca con un pájaro, el juego termina y el avión es destruido.
+- Si el avión choca con un pájaro, el juego termina y el avión es destruido.
 
-Cada pájaro derribado otorga 1 punto al jugador.
+- Cada pájaro derribado otorga 1 punto al jugador.
+
+## Tecnologías utilizadas
+
+- **AdView:** Implementación de anuncios en el juego.
+
+- **SplashScreen:** Pantalla de presentación al iniciar el juego.
+
+- **MenuActivity:** Menú principal con opciones de juego.
+
+- **GameOverActivity:** Se muestra al perder la partida y aparece la puntuación obtenida.
+  
+- **Sonido de disparo:** Efecto de sonido al disparar.
+
+- *Música en el menú:* Ambiente sonoro en la pantalla principal.
 
 ## Tecnologías utilizadas
 
@@ -40,7 +54,7 @@ Compila y ejecuta en un dispositivo físico o emulador.
 
 ## Mejoras Futuras
 
-Implementar niveles de dificultad.
+Implementar diferentes niveles.
 
 Agregar diferentes tipos de enemigos.
 
