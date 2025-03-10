@@ -16,21 +16,21 @@ public class GameOverActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gameover);
 
-        // Obtener la puntuación pasada desde GameView
+        //Obtener la puntuacion pasada desde GameView
         int score = getIntent().getIntExtra("score", 0);
 
-        // Mostrar la puntuación en el TextView
+        //Mostrar la puntuacion en el TextView
         TextView scoreTextView = findViewById(R.id.textScore);
         BotonesYTexto.setTextViewText(scoreTextView, "Score: " + score);
 
-        // Botón para volver al menú principal
+        //Boton para volver al menu principal
         Button btnMenu = findViewById(R.id.btnMenu);
         BotonesYTexto.setButtonOnClickListener(btnMenu, v -> {
             NavegacionDePantallas.navigateTo(GameOverActivity.this, MainActivity.class);
             finish();
         });
 
-        // Botón para reiniciar el juego
+        //Boton para reiniciar el juego
         Button btnRestart = findViewById(R.id.btnRestart);
         BotonesYTexto.setButtonOnClickListener(btnRestart, v -> {
             NavegacionDePantallas.navigateTo(GameOverActivity.this, GameActivity.class);

@@ -10,9 +10,7 @@ import com.example.juego2d.R;
 import com.example.juego2d.utils.graficos.CargarImg;
 import com.example.juego2d.ui.views.GameView;
 
-/**
- * Clase que representa un avión en el juego.
- */
+//Clase que representa un avion
 public class Avion {
 
     public int toShoot = 0;
@@ -26,36 +24,30 @@ public class Avion {
     Bitmap avion1, avion2, disparo1, disparo2, disparo3, disparo4, disparo5, muerte;
     private GameView gameView;
 
-    /**
-     * Constructor de la clase Avion.
-     *
-     * @param gameView Vista del juego donde se dibujará el avión.
-     * @param screenY  Altura de la pantalla.
-     * @param res      Recursos de la aplicación para cargar imágenes.
-     */
+    //Constructor de la clase avion
     public Avion(GameView gameView, int screenY, Resources res) {
         this.gameView = gameView;
 
-        // Define las dimensiones deseadas para las imágenes
-        width = 500; // Ancho deseado
-        height = 500; // Alto deseado
+        //Define las dimensiones deseadas para las imagenes
+        width = 500;
+        height = 500;
 
-        // Ajusta las dimensiones segun la pantalla
+        //Ajusta las dimensiones segun la pantalla
         width = (int) (width * screenRatioX);
         height = (int) (height * screenRatioY);
 
-        // Carga y redimensiona las imagenes del avion normal
+        //Carga y redimensiona img del avion normal
         avion1 = CargarImg.loadAndResizeImage(res, R.drawable.fly1, width, height);
         avion2 = CargarImg.loadAndResizeImage(res, R.drawable.fly2, width, height);
 
-        // Carga y redimensiona las imagenes de disparo
+        //Carga y redimensiona img de disparo
         disparo1 = CargarImg.loadAndResizeImage(res, R.drawable.shoot1, width, height);
         disparo2 = CargarImg.loadAndResizeImage(res, R.drawable.shoot2, width, height);
         disparo3 = CargarImg.loadAndResizeImage(res, R.drawable.shoot3, width, height);
         disparo4 = CargarImg.loadAndResizeImage(res, R.drawable.shoot4, width, height);
         disparo5 = CargarImg.loadAndResizeImage(res, R.drawable.shoot5, width, height);
 
-        // Carga y redimensiona la imagen del avion roto
+        //Carga y redimensiona img del avion roto
         muerte = CargarImg.loadAndResizeImage(res, R.drawable.dead, width, height);
 
         // Posiciona el personaje en el centro vertical de la pantalla
@@ -64,15 +56,11 @@ public class Avion {
 
     }
 
-    /**
-     * Devuelve la imagen del avión según su estado.
-     *
-     * @return La imagen actual del avión.
-     */
+    //Devuelve la imagen del avion segun su estado
     public Bitmap getAvion() {
         if (toShoot != 0) {
 
-            // Si el personaje esta disparando....
+            //Si el personaje esta disparando ...
             if (shootCounter == 1) {
                 shootCounter++;
                 return disparo1;
@@ -90,14 +78,15 @@ public class Avion {
                 return disparo4;
             }
 
-            // Reinicia la animacion de disparo y genera una nueva bala
+            //Reinicia la animacion de disparo y genera una nueva bala
             shootCounter = 1;
             toShoot--;
             gameView.nuevaBala();
 
             return disparo5;
         }
-        // Alterna entre las dos imágenes del vuelo normal
+
+        //Alterna entre las dos imagenes del vuelo normal
         if (wingCounter == 0) {
             wingCounter++;
             return avion1;
@@ -106,11 +95,7 @@ public class Avion {
         return avion2;
     }
 
-    /**
-     * Devuelve la imagen del avión cuando ha sido destruido.
-     *
-     * @return Imagen del avión destruido.
-     */
+    //Devuelve la imagen del avion cuando ha sido destruido
     public Bitmap getMuerte() {
         return muerte;
     }

@@ -24,9 +24,10 @@ import java.util.List;
 import java.util.Random;
 
 /**
- * Clase que gestiona la vista y la lógica del juego en la pantalla.
- * Esta clase se encarga de dibujar los elementos del juego y manejar la lógica de la jugabilidad,
- * como el movimiento de los objetos, la detección de colisiones y la actualización del puntaje.
+ * Gestiona la vista y logica del juego en la pantalla
+ * <p>
+ * Esta clase se encarga de dibujar los elementos del juego y manejar la logica de la jugabilidad,
+ * como el movimiento de los objetos, la deteccion de colisiones y la actualizacion del puntaje
  */
 @SuppressLint("ViewConstructor")
 public class GameView extends SurfaceView implements Runnable {
@@ -44,78 +45,65 @@ public class GameView extends SurfaceView implements Runnable {
     private Avion avion;
     private GameActivity activity;
     private Background background1, background2;
-    private float lastTouchY = 0; // Variable para rastrear la posición del toque
+    private float lastTouchY = 0;
 
-
-    /**
-     * Constructor que inicializa la vista del juego.
-     *
-     * @param activity La actividad principal del juego (GameActivity).
-     * @param screenX  Ancho de la pantalla en píxeles.
-     * @param screenY  Alto de la pantalla en píxeles.
-     */
+    //Constructor que inicializa la vista del juego
     public GameView(GameActivity activity, int screenX, int screenY) {
         super(activity);
         this.activity = activity;
 
-        // Configuración de los efectos de sonido dependiendo de la versión de Android
+        //Configuracion de los efectos de sonido dependiendo de la versión de Android
         AudioAttributes audioAttributes = new AudioAttributes.Builder().setContentType(AudioAttributes.CONTENT_TYPE_MUSIC).setUsage(AudioAttributes.USAGE_GAME).build();
 
         soundPool = new SoundPool.Builder().setAudioAttributes(audioAttributes).setMaxStreams(5).build();
 
-        // Carga el sonido del disparo desde los recursos
+        //Carga el sonido del disparo desde los recursos
         sound = soundPool.load(activity, R.raw.shoot, 1);
 
-        // Configuración de las dimensiones de la pantalla y relación de aspecto
+        //Configuración de las dimensiones de la pantalla y relacion de aspecto
         this.screenX = screenX;
         this.screenY = screenY;
         screenRatioX = 1920f / screenX;
         screenRatioY = 1080f / screenY;
 
-        // Inicialización de los fondos del juego
+        //Inicializacion de los fondos del juego
         background1 = new Background(screenX, screenY, getResources());
         background2 = new Background(screenX, screenY, getResources());
         background2.x = screenX; // Segundo fondo colocado a la derecha del primero
 
-        // Inicialización del avión (personaje principal)
+        //Inicializacion del avion (personaje principal)
         avion = new Avion(this, screenY, getResources());
 
-        // Lista para las balas
+        //Lista para las balas
         balas = new ArrayList<>();
 
-        // Configuración de la fuente para mostrar el puntaje en pantalla
+        //Configuración de la fuente para mostrar el puntaje en pantalla
         paint = new Paint();
         paint.setTextSize(128);
         paint.setColor(Color.WHITE);
 
-        // Inicialización de los pajaros
+        //Inicialización de los pajaros
         pajaros = new Pajaro[4];
         for (int i = 0; i < 4; i++) {
             Pajaro pajaro = new Pajaro(getResources());
             pajaros[i] = pajaro;
         }
-        random = new Random(); // Generador Random para las posiciones
+        random = new Random(); //Generador Random para las posiciones
     }
 
-    /**
-     * Metodo que ejecuta el bucle principal del juego.
-     * Este metodo actualiza la lógica del juego, dibuja los elementos en pantalla
-     * y controla la velocidad de actualización.
-     */
+    //Ejecuta el BUCLE PRINCIPAL DEL JUEGO. Actualiza la logica , Dibuja los elementos y controla la velocidad
     @Override
     public void run() {
         while (isPlaying) {
-            update(); // Actualiza la lógica del juego
-            draw();   // Dibuja los elementos en pantalla
-            sleep();  // Controla la velocidad del juego
+            update(); //Actualiza la logica
+            draw();   //Dibuja los elementos
+            sleep();  //Controla la velocidad
         }
     }
 
-    /**
-     * Metodo que actualiza la lógica del juego, moviendo los elementos y verificando las colisiones.
-     */
+    //ACTUALIZA LA LOGICA DEL JUEGO, moviendo los elementos y verificando las colisiones
     private void update() {
-        // Movimiento del fondo (simula desplazamiento)
+        //Movimiento del fondo (simula desplazamiento)
         background1.x -= 5 * screenRatioX;
         background2.x -= 5 * screenRatioX;
 
@@ -127,25 +115,25 @@ public class GameView extends SurfaceView implements Runnable {
             background2.x = screenX;
         }
 
-        // Movimiento del avión
+        //Movimiento del avión
         if (avion.isGoingUp) {
             avion.y -= 30 * screenRatioY;
         } else if (avion.isGoingDown) {
             avion.y += 30 * screenRatioY;
         }
 
-        // Evita que el avión salga de los límites de la pantalla
+        //Evita que el avión salga de los límites de la pantalla
         if (avion.y < 0) avion.y = 0;
         if (avion.y >= screenY - avion.height) avion.y = screenY - avion.height;
 
-        // Lista de balas a eliminar
+        //Lista de balas a eliminar
         List<Bala> trash = new ArrayList<>();
 
         for (Bala bala : balas) {
             if (bala.x > screenX) trash.add(bala);
             bala.x += 50 * screenRatioX; // Movimiento de la bala
 
-            // Verifica colisiones entre balas y aves
+            //Verifica colisiones entre balas y aves
             for (Pajaro pajaro : pajaros) {
                 if (Colisionador.verificarColisionBalaPajaro(bala, pajaro)) {
                     score++; // Incrementa el puntaje
@@ -155,23 +143,23 @@ public class GameView extends SurfaceView implements Runnable {
                 }
             }
         }
-        // Elimina las balas que ya no están en uso
+        //Elimina las balas que ya no estan en uso
         balas.removeAll(trash);
-        // Mueve el pájaro hacia la izquierda según su velocidad
+        //Mueve el pájaro hacia la izquierda según su velocidad
         for (Pajaro pajaro : pajaros) {
             pajaro.y = Math.max(pajaro.y, screenY / 4);
             pajaro.x -= pajaro.speed;
 
-            // Si el pájaro sale completamente de la pantalla por la izquierda
+            //Si el pájaro sale completamente de la pantalla por la izquierda
             if (pajaro.x + pajaro.width < 0) {
 
-                // Configura una nueva velocidad aleatoria para el pájaro
+                //Configura una nueva velocidad aleatoria para el pájaro
                 int bound = (int) (30 * screenRatioX);
                 pajaro.speed = random.nextInt(bound);
-                // Asegura que la velocidad mínima sea suficiente para moverse
+                //Asegura que la velocidad mínima sea suficiente para moverse
                 if (pajaro.speed < 10 * screenRatioX) pajaro.speed = (int) (10 * screenRatioX);
 
-                // Reinicia la posición del pájaro para que reaparezca en la pantalla
+                //Reinicia la posición del pájaro para que reaparezca en la pantalla
                 pajaro.x = screenX;
                 pajaro.y = random.nextInt(screenY - pajaro.height);
                 pajaro.wasShot = false; // Indica que no ha sido derribado en esta nueva aparición
@@ -190,26 +178,25 @@ public class GameView extends SurfaceView implements Runnable {
         }
     }
 
-    /**
-     * Metodo que dibuja los elementos del juego en la pantalla.
-     * Dibuja los fondos, el avión, los pájaros, las balas y el puntaje.
-     */
+    //Dibuja los elementos del juego en la pantalla. Fondos, Avion, Pajaros, Balas y Score
     private void draw() {
-        // Verifica si la superficie de dibujo es válida
+        //Verifica si la superficie de dibujo es válida
         if (getHolder().getSurface().isValid()) {
 
-            // Bloquea el canvas para comenzar a dibujar
+            //Bloquea el canvas para comenzar a dibujar
             Canvas canvas = getHolder().lockCanvas();
-            // Dibuja los fondos en la pantalla
+
+            //Dibuja los fondos en la pantalla
             canvas.drawBitmap(background1.background, background1.x, background1.y, paint);
             canvas.drawBitmap(background2.background, background2.x, background2.y, paint);
 
-            // Dibuja todos los pájaros en la pantalla
+            //Dibuja todos los pajaros en la pantalla
             for (Pajaro pajaro : pajaros) {
                 int posicionY = Math.max(pajaro.y, screenY / 4);
                 canvas.drawBitmap(pajaro.getPajaro(), pajaro.x, posicionY, paint);
             }
-            // Dibuja el puntaje en el centro superior de la pantalla
+
+            //Dibuja el puntaje en el centro superior de la pantalla
             canvas.drawText(score + "", screenX / 2f, 164, paint);
 
             // Si el juego ha terminado, dibuja la imagen del personaje muerto y espera antes de salir
@@ -218,40 +205,22 @@ public class GameView extends SurfaceView implements Runnable {
                 canvas.drawBitmap(avion.getMuerte(), avion.x, avion.y, paint);
                 getHolder().unlockCanvasAndPost(canvas);
 
-                //waitBeforeExiting(); // Espera antes de salir
                 return;
             }
 
-            // Dibuja el personaje en la pantalla
+            //Dibuja el personaje en la pantalla
             canvas.drawBitmap(avion.getAvion(), avion.x, avion.y, paint);
 
-            // Dibuja todas las balas activas en la pantalla
+            //Dibuja todas las balas activas en la pantalla
             for (Bala bala : balas)
                 canvas.drawBitmap(bala.bala, bala.x, bala.y, paint);
 
-            // Libera el canvas y muestra los cambios en la pantalla
+            //Libera el canvas y muestra los cambios en la pantalla
             getHolder().unlockCanvasAndPost(canvas);
         }
     }
 
-    /**
-     * Metodo que espera unos segundos antes de salir del juego tras un Game Over.
-     * Después de la espera, vuelve a la pantalla principal del juego.
-     */
-    private void waitBeforeExiting() {
-        try {
-            Thread.sleep(3000); // Pausa durante 3 segundos
-            activity.startActivity(new Intent(activity, MainActivity.class)); // Vuelve a la pantalla principal
-            activity.finish(); // Cierra la actividad actual
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-    }
-
-    /**
-     * Metodo que controla la velocidad del juego aplicando una pausa breve en cada iteración del bucle principal.
-     */
+    //Controla la velocidad del juego aplicando una pausa breve en cada iteración del bucle principal
     private void sleep() {
         try {
             Thread.sleep(17);
@@ -260,84 +229,68 @@ public class GameView extends SurfaceView implements Runnable {
         }
     }
 
-    /**
-     * Metodo que reanuda el juego iniciando el hilo principal.
-     */
+    //Reanuda el juego iniciando el hilo principal.
     public void resume() {
         isPlaying = true;
         thread = new Thread(this);
         thread.start();
     }
 
-    /**
-     * Metodo que detecta la interacción del usuario con la pantalla táctil.
-     *
-     * @param event El evento de toque.
-     * @return true si el evento ha sido procesado correctamente.
-     */
+    //Detecta la interaccion del usuario con la pantalla tactil
     @SuppressLint("ClickableViewAccessibility")
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        int action = event.getActionMasked(); // Tipo de evento
-        int pointerIndex = event.getActionIndex(); // Índice del puntero
+        int action = event.getActionMasked();
+        int pointerIndex = event.getActionIndex();
 
         float x = event.getX(pointerIndex);
         float y = event.getY(pointerIndex);
 
         switch (action) {
             case MotionEvent.ACTION_DOWN:
-            case MotionEvent.ACTION_POINTER_DOWN: // Se detecta un toque
-                if (x < (float) screenX / 2) { // Lado izquierdo de la pantalla
-                    lastTouchY = y; // Guardar posición inicial del toque
-                } else { // Lado derecho: disparo
+            case MotionEvent.ACTION_POINTER_DOWN: //DETECTA EL DEDO
+                if (x < (float) screenX / 2) { //Solo si es en la Derecha
+                    lastTouchY = y;
+                } else {
                     avion.toShoot++;
                 }
                 break;
 
-            case MotionEvent.ACTION_MOVE: // Detectar el desplazamiento
-                if (x < (float) screenX / 2) { // Solo si es en la izquierda
-                    if (y < lastTouchY) { // Mover arriba
+            case MotionEvent.ACTION_MOVE: //Detectar el desplazamiento
+                if (x < (float) screenX / 2) { //Solo si es en la izquierda
+                    if (y < lastTouchY) {
                         avion.isGoingUp = true;
                         avion.isGoingDown = false;
-                    } else if (y > lastTouchY) { // Mover abajo
+                    } else if (y > lastTouchY) {
                         avion.isGoingUp = false;
                         avion.isGoingDown = true;
                     }
-                    lastTouchY = y; // Actualizar la última posición
+                    lastTouchY = y;
                 }
                 break;
 
             case MotionEvent.ACTION_UP:
-            case MotionEvent.ACTION_POINTER_UP: // Se suelta el dedo
+            case MotionEvent.ACTION_POINTER_UP: //NO DETECTA EL DEDO
                 if (x < (float) screenX / 2) {
-                    avion.isGoingUp = false; // Detener movimiento cuando se suelta
+                    avion.isGoingUp = false; //Detener movimiento
                     avion.isGoingDown = false;
                 }
                 break;
         }
 
-        return true; // Seguir detectando eventos táctiles
+        return true;
     }
 
-    /**
-     * Genera un nuevo disparo desde la posición actual del avión.
-     * Crea una nueva instancia de la clase {@link Bala}, establece su posición justo
-     * frente al avión y la alinea con el centro del mismo. Luego, agrega la bala
-     * a la lista de balas activas.
-     * -
-     * También reproduce un sonido de disparo, a menos que el juego esté en modo mudo.
-     *
-     * @see Bala
-     */
+    //Genera un nuevo disparo desde la posicion actual del avion
     public void nuevaBala() {
         Bala bala = new Bala(getResources());
-        bala.x = avion.x + avion.width; // La bala aparece justo delante del personaje
-        bala.y = avion.y + (avion.height / 2); // Se alinea al centro del personaje
-        balas.add(bala); // Agrega la bala a la lista de balas activas
+        bala.x = avion.x + avion.width; //La bala aparece delante del avion
+        bala.y = avion.y + (avion.height / 2); //Se alinea al centro del avion
+        balas.add(bala);
 
         // Reproducir el sonido de disparo
         if (!activity.isMute) {
-            soundPool.play(sound, 1, 1, 0, 0, 1);  // Reproduce el sonido
+            soundPool.play(sound, 1, 1, 0, 0, 1);
 
         }
     }

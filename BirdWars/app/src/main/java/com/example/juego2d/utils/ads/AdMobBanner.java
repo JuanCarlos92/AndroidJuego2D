@@ -12,10 +12,7 @@ import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.AdView;
 
-/**
- * Clase auxiliar para gestionar la configuración y carga del banner de anuncios en AdMob.
- * Incluye funcionalidad para cerrar automáticamente el anuncio después de un tiempo determinado.
- */
+//Clase auxiliar para gestionar la configuración y carga del banner de anuncios en AdMob
 public class AdMobBanner {
     private final Activity activity;
     private AdView adView;
@@ -27,12 +24,7 @@ public class AdMobBanner {
         this.activity = activity;
     }
 
-    /**
-     * Configura y carga el banner de anuncios en el contenedor proporcionado.
-     * El anuncio se cerrará automáticamente después de 20 segundos.
-     *
-     * @param adContainerView Contenedor donde se mostrará el anuncio.
-     */
+    //Configura y carga el banner de anuncios en el contenedor proporcionado.
     public void setupAdView(FrameLayout adContainerView) {
         this.adContainerView = adContainerView;
         adView = new AdView(activity);
@@ -43,20 +35,15 @@ public class AdMobBanner {
         AdRequest adRequest = new AdRequest.Builder().build();
         adView.loadAd(adRequest);
 
-        // Programar el cierre del anuncio después de 15 segundos
         scheduleAdClose();
     }
 
-    /**
-     * Programa el cierre del anuncio después del tiempo especificado.
-     */
+    //Programa el cierre del anuncio después del tiempo especificado.
     private void scheduleAdClose() {
         handler.postDelayed(this::closeAd, AD_DISPLAY_TIME_MS);
     }
 
-    /**
-     * Cierra el anuncio eliminándolo del contenedor.
-     */
+    //Cierra el anuncio eliminándolo del contenedor.
     private void closeAd() {
         if (adView != null && adContainerView != null) {
             adContainerView.removeView(adView);
@@ -64,9 +51,7 @@ public class AdMobBanner {
         }
     }
 
-    /**
-     * Calcula el tamaño del banner de anuncios de forma adaptable.
-     */
+    //Calcula el tamaño del banner de anuncios de forma adaptable.
     private AdSize getAdSize() {
         DisplayMetrics displayMetrics = activity.getResources().getDisplayMetrics();
         int adWidthPixels = displayMetrics.widthPixels;
@@ -81,10 +66,7 @@ public class AdMobBanner {
         return AdSize.getCurrentOrientationAnchoredAdaptiveBannerAdSize(activity, adWidth);
     }
 
-    /**
-     * Metodo para limpiar recursos cuando no se necesita más el anuncio.
-     * Importante llamar a este metodo en onDestroy() de la actividad.
-     */
+    //Metodo para limpiar recursos cuando no se necesita más el anuncio.
     public void destroy() {
         handler.removeCallbacksAndMessages(null);
         if (adView != null) {

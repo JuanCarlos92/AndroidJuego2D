@@ -9,7 +9,8 @@ import com.example.juego2d.ui.views.GameView;
 import com.example.juego2d.utils.ui.PantallaCompleta;
 
 /**
- * Actividad principal del juego que gestiona la vista del juego y la interacción con el usuario.
+ * Gestiona la vista del juego y la interacción con el usuario
+ * <p>
  * Esta actividad se encarga de inicializar y mostrar la pantalla del juego, controlar el muteo del sonido,
  * y gestionar las pausas y reanudaciones del juego cuando la aplicación se minimiza o vuelve a primer plano.
  */
@@ -18,12 +19,8 @@ public class GameActivity extends AppCompatActivity {
     private GameView gameView;
     public boolean isMute;
 
-    /**
-     * Metodo que se llama al crear la actividad.
-     * Inicializa la vista del juego y configura la pantalla a pantalla completa.
-     *
-     * @param savedInstanceState El estado guardado de la actividad anterior, si existe.
-     */
+    //Metodo se llama al crear la actividad
+    //Inicializa la vista del juego y configura la pantalla a pantalla completa
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,7 +28,7 @@ public class GameActivity extends AppCompatActivity {
         // Obtener el valor de 'isMute' pasado desde MainActivity
         isMute = getIntent().getBooleanExtra("isMute", false);
 
-        // Configurar la pantalla a pantalla completa
+        // Configura pantalla completa
         PantallaCompleta.setFullScreen(this);
 
         // Obtener el tamaño de la pantalla
@@ -42,10 +39,7 @@ public class GameActivity extends AppCompatActivity {
         setContentView(gameView);
     }
 
-    /**
-     * Metodo que se llama cuando la actividad se reanuda, por ejemplo, cuando la aplicación vuelve al primer plano.
-     * En este metodo se reanuda el juego.
-     */
+    //Metodo que se llama cuando la actividad se reanuda
     @Override
     protected void onResume() {
         super.onResume();

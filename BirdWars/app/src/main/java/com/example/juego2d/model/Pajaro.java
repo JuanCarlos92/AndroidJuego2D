@@ -9,9 +9,7 @@ import android.graphics.Bitmap;
 import com.example.juego2d.R;
 import com.example.juego2d.utils.graficos.CargarImg;
 
-/**
- * Clase que representa un pájaro enemigo en el juego.
- */
+//Clase que representa un pajaro
 public class Pajaro {
 
     public int speed = 20;
@@ -23,39 +21,30 @@ public class Pajaro {
     int birdCounter = 1;
     Bitmap pajaro1, pajaro2, pajaro3, pajaro4;
 
-
-    /**
-     * Constructor de la clase Pajaro.
-     *
-     * @param res Recursos para cargar las imágenes del pájaro.
-     */
+    //Constructor de la clase pajaro
     public Pajaro(Resources res) {
 
-        width = 200; // Ancho deseado
-        height = 200; // Alto deseado
+        width = 200;
+        height = 200;
 
-        // Ajusta las dimensiones según la pantalla
+        //Ajusta las dimensiones segun la pantalla
         width = (int) (width * screenRatioX);
         height = (int) (height * screenRatioY);
 
-        // Carga y redimensiona las imágenes del pájaro
+        //Carga y redimensiona las imagenes del pajaro
         pajaro1 = CargarImg.loadAndResizeImage(res, R.drawable.bird1, width, height);
         pajaro2 = CargarImg.loadAndResizeImage(res, R.drawable.bird2, width, height);
         pajaro3 = CargarImg.loadAndResizeImage(res, R.drawable.bird3, width, height);
         pajaro4 = CargarImg.loadAndResizeImage(res, R.drawable.bird4, width, height);
 
-        // Inicializa (la posición Y) del pájaro fuera de la pantalla (arriba)
+        //Inicializa (la posición Y) del pájaro fuera de la pantalla (arriba)
         y = -height;
     }
 
-    /**
-     * Devuelve la imagen del pájaro correspondiente a la animación.
-     *
-     * @return Bitmap de la imagen actual del pájaro en la animación.
-     */
+    //Devuelve la imagen del pajaro correspondiente a la animacion
     public Bitmap getPajaro() {
 
-        // Controla el ciclo de animacion cambiando el frame en cada llamada
+        //Controla el ciclo de animacion cambiando el frame en cada llamada
         if (birdCounter == 1) {
             birdCounter++;
             return pajaro1;
@@ -69,9 +58,8 @@ public class Pajaro {
             return pajaro3;
         }
 
-        // Reinicia el contador y devuelve el último frame
+        //Reinicia el contador y devuelve el ultimo frame
         birdCounter = 1;
         return pajaro4;
     }
-
 }

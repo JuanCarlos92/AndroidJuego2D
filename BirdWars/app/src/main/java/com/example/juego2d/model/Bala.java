@@ -9,10 +9,7 @@ import static com.example.juego2d.ui.views.GameView.screenRatioY;
 import com.example.juego2d.R;
 import com.example.juego2d.utils.graficos.CargarImg;
 
-/**
- * Clase que representa una bala en el juego.
- * La bala es un objeto que se dispara desde el avión.
- */
+//Clase que representa una bala
 public class Bala {
 
     public int x;
@@ -21,23 +18,17 @@ public class Bala {
     public int height;
     public Bitmap bala;
 
-    /**
-     * Constructor de la clase Bala.
-     * Carga y redimensiona la imagen de la bala según la pantalla.
-     *
-     * @param res Recursos de la aplicación para cargar la imagen de la bala.
-     */
+    //Constructor de la clase bala
     public Bala(Resources res) {
-        width = 100; // Ancho deseado
-        height = 100; // Alto deseado
+        width = 100;
+        height = 100;
 
-        // Ajusta las dimensiones según la pantalla
+        //Ajusta las dimensiones segun la pantalla
         width = (int) (width * screenRatioX);
         height = (int) (height * screenRatioY);
 
-        // Carga y redimensiona la imagen de la bala
+        //Carga y redimensiona la imagen de la bala
         bala = CargarImg.loadAndResizeImage(res, R.drawable.bullet, width, height);
 
     }
-
 }
